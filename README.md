@@ -29,6 +29,7 @@ For the present purposes, the raw (functional) data are subjected to the followi
 1. Motion correction (realignment)
 2. Co-registration to the anatomical image
 3. Normalization to standard MNI space
+
 To conduct these 3 preprocessing steps, enter the following lines of code in the Matlab command window:
 
 ```
