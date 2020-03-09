@@ -483,8 +483,8 @@ all_functional_scans = fileInfo.functional_file_names{iSubject};
 for iScan = 1:length(all_functional_scans)
     this_scan_name = all_functional_scans{iScan};
     
-	  simulated_data_dir = [fileInfo.data_dir '\Test simulation'];
-	  this_scan_name = DataSimulation(iScan, this_scan_name, 			this_subject_group, fileInfo.base_dir, simulated_data_dir);
+    simulated_data_dir = [fileInfo.data_dir '\Test simulation'];
+    this_scan_name = DataSimulation(iScan, this_scan_name, this_subject_group, fileInfo.base_dir, simulated_data_dir);
 end
 ```
 
