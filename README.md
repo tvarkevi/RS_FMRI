@@ -45,7 +45,7 @@ To segment the anatomical data into grey matter, white matter, and cerebrospinal
 Segmentation(fileInfo.base_dir, fileInfo.data_dir);
 ```
 
-Note: In order to successfully run the Segmentation.m script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, [Segmentation_job.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation_job.m), into the full path of the TPM.nii file located on your device (usually in the *.../spm12/tpm subdirectory*).
+Note: In order to successfully run the [Segmentation.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation.m) script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, [Segmentation_job.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation_job.m), into the full path of the TPM.nii file located on your device (usually in the *.../spm12/tpm subdirectory*).
 
 ### 1.3 Brain mask
 
