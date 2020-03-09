@@ -155,13 +155,13 @@ The subject-level statistical analysis is conducted in a multi-step procedure:
 
 #### 3.2.1 Subject-level analyses
 
-The subject-level confirmatory analyses are governed by a script called [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m). This script batches the seed-to-ROI-wise GLM analyses performed by the ROIWiseGLM.m script. It then saves the resulting beta-coefficients of the predictor of interest (i.e., the seed-region) as a .mat file in the subject directories. 
+The subject-level confirmatory analyses are governed by a script called [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m). This script batches the seed-to-ROI-wise GLM analyses performed by the [ROIWiseGLM.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ROIWiseGLM.m) script. It then saves the resulting beta-coefficients of the predictor of interest (i.e., the seed-region) as a .mat file in the subject directories. 
 
 > Optional: It is possible to enter a second brain region as nuisance variable in the seed-to-ROI-wise GLM analyses, by entering an optional additional input argument for the [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) and [ROIWiseGLM.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ROIWiseGLM.m) functions (i.e., via the definition statement 'varargin' in Matlab). This approach is one of two methods to control for partial volume sharing with a region-of-no-interest that is provided by the analysis pipeline (see section 3.2.3 for the second method; see also [Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017](https://academic.oup.com/scan/article/12/12/1881/4460105)). 
 
 > Optional: As already alluded to in section 3.1, the subject-level GLM analyses are conducted with the (filtered) white matter and CSF parameters as nuisance variables. The [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) script can either extract these nuisance variables automatically (if lines 26 and 27 are in comment, but lines 24 and 25 are de-commented) or load these parameters from pre-computed .mat files (if lines 26 and 27 are de-commented, but lines 24 and 25 are in comment). If the former of these options is selected, then the [ObtainWhiteMatterPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainWhiteMatterPredictor.m) and [ObtainCSFPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainCSFPredictor.m) scripts are executed automatically by the [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) function (see also section 3.1).
 
-##### 3.2.1.1 Basolateral amygdala vs. OFC
+#### 3.2.1.1 Basolateral amygdala vs. OFC
 
 To execute the subject-level confirmatory GLM procedure with the basolateral amygdala as seed-region, the centromedial amygdala as optional nuisance variable, and the OFC as non-seed ROI, enter the following lines of code in the command window:
 
@@ -173,7 +173,7 @@ analysis_type = 2;
 SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo, nuisance_region);
 ```
 
-##### 3.2.1.2 Centromedial amygdala vs. PAG
+#### 3.2.1.2 Centromedial amygdala vs. PAG
 
 To execute the subject-level confirmatory GLM procedure with the centromedial amygdala as seed-region, the basolateral amygdala as optional nuisance variable, and the PAG as non-seed ROI, enter the following lines of code in the command window:
 
@@ -189,7 +189,7 @@ SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo, nuis
 
 The seed-to-ROI-wise GLM analysis is conducted using the ROIWiseGLM.m script, which requires a subject number (corresponding to the line of the current subject in the subjects text file) as input argument. This function first extracts the raw time-course of the (mean) seed-region signal via the ObtainROIPredictor.m script. It then filters the signal of the seed-region predictor of interest, as well as that of the nuisance variables, by using the ezfilt.m sub-function. It also computes (and filters) the global mean signal as nuisance variable. The time-course of the non-seed ROI is then extracted using the ObtainROIPredictor.m script, and again filtered with the ezfilt.m script. These filtered signals are then used to conduct the following GLM:
 
-| Non-Seed ROI = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error |
+>> Non-Seed ROI = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error
 
 This GLM is computed for all (hemispheric) combinations of seed/non-seed ROIs.
 
@@ -261,7 +261,7 @@ analysis_type = 2;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
 ```
 
-4. Exploratory whole-brain analysis
+## 4. Exploratory whole-brain analysis
 
 The exploratory whole-brain analyses are conducted in a 4-step procedure:
 1. The time-course of the (seed-)ROIs and nuisance variables are extracted from the preprocessed functional data (see section 4.2.3).
