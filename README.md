@@ -57,58 +57,74 @@ ComputeBrainMask(fileInfo, reslice_grey_matter_mask);
 
 ## 2. Defining the regions-of-interest
 
-2.1 Amygdala (seed) regions
+### 2.1 Amygdala (seed) regions
 
 Reslice the basolateral and centromedial amygdala (probability, or p) maps (respectively). The basolateral amygdala p-map is resliced (via the ResliceROIMask.m script) by entering the following lines of code in the Matlab command window:
 
+````
 input_filename = 'Amygdala_LB.nii';
 ResliceROIMask(fileInfo, input_filename);
-	
+````
+
 Next, reslice the centromedial amygdala p-map by entering the following lines of code in the command window (i.e., assuming fileInfo is already defined; see above):
 
+```
 input_filename = 'Amygdala_CM.nii';
 ResliceROIMask(fileInfo, input_filename);
+```
 
 Note: It is also possible to create a p-map of the total amygdala as seed-region, This can be done using the ComputeAmygdalaMask.m file by entering the following line of code in the command window:
 
+```
 ComputeAmygdalaMask;
+```
 
 This function sums the ‘Amygdala_BL.nii’, ‘Amygdala_CM.nii’, and ‘Amygdala_SF.nii’ p-maps into the conjoined output files ‘Amygala_Total.nii’ and ‘Amygala_Total.nii’, representing the unprocessed and resliced total amygdala p-maps, respectively.
 
-2.2 Anterior cingulate cortex (ACC)
+### 2.2 Anterior cingulate cortex (ACC)
 
 Reslice the ACC p-map by entering the following lines of code into the command window:
 
+```
 input_filename = 'Cingulum_33.nii';
 ResliceROIMask(fileInfo, input_filename);
+```
 
-2.3 Anterior insular cortex (AIC)
+### 2.3 Anterior insular cortex (AIC)
+
 The Anatomy toolbox of spm12 does not contain a p-map of the AIC. Hence, the AIC is defined as seed-region by using the AICHA connectivity atlas of Joliot et al. (2015). To compute a (resliced) binary map of the AIC as region-of-interest, enter the following line of code in the command window:
 
+```
 ComputeAICMask;
+```
 
-2.4 Orbitofrontal cortex (OFC)
+### 2.4 Orbitofrontal cortex (OFC)
 
 An ROI-wise (group) analysis cannot be conducted without first computing the (non-seed) ROIs themselves. To compute a (resliced) p-map of the total OFC as region-of-interest, enter the following line of code in the command window:
 
+```
 ComputeOFCMask;
+```
 
 This ComputeOFCMask.m script generates a (resliced) p-map of the OFC as the sum of the ‘OFC_Fo1.nii’, ‘OFC_Fo2.nii’, and ‘OFC_Fo3.nii’  data maps from the Anatomy toolbox of spm12. The output is stored into the ‘OFC_Total.nii’ and ‘rOFC_Total.nii’ files, which represent the unprocessed and resliced total OFC p-maps, respectively.
 
-2.5 Periaqueductal grey (PAG)
+### 2.5 Periaqueductal grey (PAG)
 
 The Anatomy toolbox of spm12 does not contain a p-map of the PAG. Therefore, to use the PAG as region-of-interest, a set of coordinates derived from a recent meta-analysis by Linnman et al. (2012) are used: x = 1, y = -29, z = -12. A binary spherical ROI is built around these central coordinates via the DefineCustomROI.m script. Enter the following lines of code in the command window:
 
+```
 input_XYZ = [1 -29 -12];
 output_filename = 'PAG.nii';
 ROI_map = DefineCustomROI(input_XYZ, output_filename);
+```
 
-3. Confirmatory ROI analysis
+### 3. Confirmatory ROI analysis
 
 The confirmatory ROI analyses are conducted in a 3-step procedure:
 1. The time-course of the (seed-)ROIs and nuisance variables are extracted from the preprocessed functional data (see section 3.2.3).
 2. Subject-level general linear models are fitted with the (filtered) time-course of the (non-seed) ROI as outcome variable, the (filtered) time-course of the seed-region as predictor-of-interest, and the six motion parameters, along with the (filtered) time-courses of the white matter, CSF, and global mean signal as nuisance variables (see section 3.2). An optional additional brain region can be entered as extra nuisance variable.
 3. Independent samples t-tests are used to determine whether group differences in (mean) functional connectivity are present (see section 3.3).
+
 These steps (as well as several auxiliary procedures) are performed via the GroupLevelAnalysis.m and SubjectLevelAnalysis.m scripts.
 
 3.1 White matter and cerebrospinal fluid (CSF) (Optional)
