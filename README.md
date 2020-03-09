@@ -56,6 +56,7 @@ reslice_grey_matter_mask = 1;
 ComputeBrainMask(fileInfo, reslice_grey_matter_mask);
 ```
 
+
 ## 2. Defining the regions-of-interest
 
 ### 2.1 Amygdala (seed) regions
@@ -119,7 +120,8 @@ output_filename = 'PAG.nii';
 ROI_map = DefineCustomROI(input_XYZ, output_filename);
 ```
 
-### 3. Confirmatory ROI analysis
+
+## 3. Confirmatory ROI analysis
 
 The confirmatory ROI analyses are conducted in a 3-step procedure:
 1. The time-course of the (seed-)ROIs and nuisance variables are extracted from the preprocessed functional data (see section 3.2.3).
@@ -260,6 +262,7 @@ non_seed_region = 'PAG.nii';
 analysis_type = 2;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
 ```
+
 
 ## 4. Exploratory whole-brain analysis
 
