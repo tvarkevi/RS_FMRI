@@ -9,11 +9,11 @@ The analyses described in this document assume you have the raw (PAR/REC) MR dat
 
 ### 1.1 Data management
 
-Many of the functions described in this manual call a script called [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m). This function contains all hard-coded filenames and full paths that the main analysis pipeline uses. Hence, in order to make use of the resting-state seed-based connectivity software described here, it is first necessary to change lines 25 (i.e., working/base directory), 26 (i.e., data directory), 29 (i.e., the name of the text file that contains the list of subject names), 47, 51, 66, and 92 (i.e., naming conventions of original or resliced scan files) in FileOrganizer.m so that they match the file infrastructure and naming conventions of your specific system.
+Many of the functions described in this manual call a script called [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m). This function contains all hard-coded filenames and full paths that the main analysis pipeline uses. Hence, in order to make use of the resting-state seed-based connectivity software described here, it is first necessary to change lines 25 (i.e., working/base directory), 26 (i.e., data directory), 29 (i.e., the name of the text file that contains the list of subject names), 47, 51, 66, and 92 (i.e., naming conventions of original or resliced scan files) in [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m) so that they match the file infrastructure and naming conventions of your specific system.
 
-Note: The software assumes the scripts, subjects.txt, and ROI maps are stored in the directory specified by base_dir, with the data stored separately (and list-wise) in the directory specified by data_dir.
+Note: The software assumes the scripts, subjects.txt, and ROI maps are stored in the same working directory, with the data stored separately (and list-wise) in another directory.
 
-To run the FileOrganizer.m script separately from the main analysis suite, enter the following lines of code in the Matlab command window:
+To run the [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m) script separately from the main analysis suite, enter the following lines of code in the Matlab command window:
 
 ```
 simulate_data = 0
@@ -24,7 +24,8 @@ From this point onwards, it is assumed that fileInfo is a variable stored in wor
 
 ### 1.2 Preprocessing and segmentation
 
-As a first step, the data need to be preprocessed and (the anatomical data) segmented into grey matter, white matter, and cerebrospinal fluid maps. This is done using the Preprocessing.m and Segmentation.m scripts.
+As a first step, the data need to be preprocessed and (the anatomical data) segmented into grey matter, white matter, and cerebrospinal fluid maps. This is done using the [Preprocessing.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Preprocessing.m) and [Segmentation.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation.m) scripts.
+
 For the present purposes, the raw (functional) data are subjected to the following preprocessing steps:
 1. Motion correction (realignment)
 2. Co-registration to the anatomical image
