@@ -15,8 +15,10 @@ Note: The software assumes the scripts, subjects.txt, and ROI maps are stored in
 
 To run the FileOrganizer.m script separately from the main analysis suite, enter the following lines of code in the Matlab command window:
 
+"""
 simulate_data = 0
 fileInfo = FileOrganizer(simulate_data);
+"""
 
 From this point onwards, it is assumed that fileInfo is a variable stored in workspace, with no alterations being performed on it, unless specifically specified in this manual.
 
