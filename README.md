@@ -1,15 +1,15 @@
 # RS_FMRI
 Seed-based functional connectivity analysis of resting-state fMRI
 
-Preliminary note: The resting-state seed-based functional connectivity procedures described in this document were developed on a Windows 7 workstation in Matlab R2016b. The following auxiliary software and toolboxes are required to be installed and added to the Matlab path in order for this analysis suite to work: [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/), [the Anatomy toolbox of SPM12](https://www.fz-juelich.de/inm/inm-1/EN/Forschung/_docs/SPMAnatomyToolbox/SPMAnatomyToolbox_node.html), [r2agui](http://r2agui.sourceforge.net/), [hiro3]().
+Preliminary note: The resting-state seed-based functional connectivity procedures described in this document were developed on a Windows 7 workstation in Matlab R2016b. The following auxiliary software and toolboxes are required to be installed and added to the Matlab path in order for this analysis suite to work: [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/), [Anatomy toolbox of SPM12](https://www.fz-juelich.de/inm/inm-1/EN/Forschung/_docs/SPMAnatomyToolbox/SPMAnatomyToolbox_node.html), [r2agui](http://r2agui.sourceforge.net/), [hiro3]().
 
 ## 1. Data preprocessing and preparation
 
-The analyses described in this document assume you have the raw (PAR/REC) MR data files converted into NIFTI format (e.g., by using the r2agui toolbox; see http://r2agui.sourceforge.net/) and stored (list-wise) in a directory called data_dir.
+The analyses described in this document assume you have the raw (PAR/REC) MR data files converted into NIFTI format (e.g., by using the r2agui toolbox; see http://r2agui.sourceforge.net/).
 
 ### 1.1 Data management
 
-Many of the functions described in this manual call a script called FileOrganizer.m. This function contains all hard-coded filenames and full paths that the main analysis pipeline uses. Hence, in order to make use of the resting-state seed-based connectivity software described here, it is first necessary to change lines 25 (i.e., working/base directory), 26 (i.e., data directory), 29 (i.e., the name of the text file that contains the list of subject names), 47, 51, 66, and 92 (i.e., naming conventions of original or resliced scan files) in FileOrganizer.m so that they match the file infrastructure and naming conventions of your specific system.
+Many of the functions described in this manual call a script called [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m). This function contains all hard-coded filenames and full paths that the main analysis pipeline uses. Hence, in order to make use of the resting-state seed-based connectivity software described here, it is first necessary to change lines 25 (i.e., working/base directory), 26 (i.e., data directory), 29 (i.e., the name of the text file that contains the list of subject names), 47, 51, 66, and 92 (i.e., naming conventions of original or resliced scan files) in FileOrganizer.m so that they match the file infrastructure and naming conventions of your specific system.
 
 Note: The software assumes the scripts, subjects.txt, and ROI maps are stored in the directory specified by base_dir, with the data stored separately (and list-wise) in the directory specified by data_dir.
 
