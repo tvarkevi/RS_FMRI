@@ -22,33 +22,39 @@ fileInfo = FileOrganizer(simulate_data);
 
 From this point onwards, it is assumed that fileInfo is a variable stored in workspace, with no alterations being performed on it, unless specifically specified in this manual.
 
-1.2 Preprocessing and segmentation
+### 1.2 Preprocessing and segmentation
 
 As a first step, the data need to be preprocessed and (the anatomical data) segmented into grey matter, white matter, and cerebrospinal fluid maps. This is done using the Preprocessing.m and Segmentation.m scripts.
 For the present purposes, the raw (functional) data are subjected to the following preprocessing steps:
-1.	Motion correction (realignment)
-2.	Co-registration to the anatomical image
-3.	Normalization to standard MNI space
+1. Motion correction (realignment)
+2. Co-registration to the anatomical image
+3. Normalization to standard MNI space
 To conduct these 3 preprocessing steps, enter the following lines of code in the Matlab command window:
 
+```
 Preprocessing(fileInfo.base_dir, fileInfo.data_dir);
+```
 
 Note: In order to successfully run the Preprocessing.m script, it is necessary to first change line 25 of the preprocessing jobfile, Preprocessing_job.m, into the full path of the TPM.nii file located on your device (usually in the spm12/tpm subdirectory).
 
 To segment the anatomical data into grey matter, white matter, and cerebrospinal fluid maps, enter the following line of code into the command window:
 
+```
 Segmentation(fileInfo.base_dir, fileInfo.data_dir);
+```
 
 Note: In order to successfully run the Segmentation.m script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, Segmentation_job.m, into the full path of the TPM.nii file located on your device (usually in the spm12/tpm subdirectory).
 
-1.3 Brain mask
+### 1.3 Brain mask
 
 As a last preparatory step, compute a mask that contains only voxels within the brain, for each of the participants specified in the subjects.txt file. This is done via the ComputeBrainMask.m script. Enter the following lines of code in the Matlab command window to execute the function:
 
+```
 reslice_grey_matter_mask = 1;
 ComputeBrainMask(fileInfo, reslice_grey_matter_mask);
+```
 
-2. Defining the regions-of-interest
+## 2. Defining the regions-of-interest
 
 2.1 Amygdala (seed) regions
 
