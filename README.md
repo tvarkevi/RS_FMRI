@@ -60,7 +60,7 @@ ComputeBrainMask(fileInfo, reslice_grey_matter_mask);
 
 ### 2.1 Amygdala (seed) regions
 
-Reslice the basolateral and centromedial amygdala (probability, or p) maps (respectively). The basolateral amygdala p-map is resliced (via the ResliceROIMask.m script) by entering the following lines of code in the Matlab command window:
+Reslice the basolateral and centromedial amygdala (probability, or p) maps (respectively). The basolateral amygdala p-map is resliced (via the [ResliceROIMask.m script](https://github.com/tvarkevi/RS_FMRI/blob/master/ResliceROIMask.m) by entering the following lines of code in the Matlab command window:
 
 ````
 input_filename = 'Amygdala_LB.nii';
@@ -74,13 +74,13 @@ input_filename = 'Amygdala_CM.nii';
 ResliceROIMask(fileInfo, input_filename);
 ```
 
-Note: It is also possible to create a p-map of the total amygdala as seed-region, This can be done using the ComputeAmygdalaMask.m file by entering the following line of code in the command window:
+Note: It is also possible to create a p-map of the total amygdala as seed-region, This can be done using the [ComputeAmygdalaMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ComputeAmygdalaMask.m) file by entering the following line of code in the command window:
 
 ```
 ComputeAmygdalaMask;
 ```
 
-This function sums the ‘Amygdala_BL.nii’, ‘Amygdala_CM.nii’, and ‘Amygdala_SF.nii’ p-maps into the conjoined output files ‘Amygala_Total.nii’ and ‘Amygala_Total.nii’, representing the unprocessed and resliced total amygdala p-maps, respectively.
+This function sums the **Amygdala_BL.nii**, **Amygdala_CM.nii**, and **Amygdala_SF.nii** p-maps into the conjoined output files 'Amygdala_Total.nii’ and ‘rAmygdala_Total.nii’, representing the unprocessed and resliced total amygdala p-maps, respectively.
 
 ### 2.2 Anterior cingulate cortex (ACC)
 
