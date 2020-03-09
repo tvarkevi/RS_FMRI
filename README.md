@@ -1,7 +1,7 @@
 # RS_FMRI
 Seed-based functional connectivity analysis of resting-state fMRI
 
-Preliminary note: The resting-state seed-based functional connectivity procedures described in this document were developed on a Windows 7 workstation in Matlab R2016b. The following auxiliary software and toolboxes are required to be installed and added to the Matlab path in order for this analysis suite to work: SPM12, SPM Anatomy toolbox, r2agui, hiro3.
+Preliminary note: The resting-state seed-based functional connectivity procedures described in this document were developed on a Windows 7 workstation in Matlab R2016b. The following auxiliary software and toolboxes are required to be installed and added to the Matlab path in order for this analysis suite to work: *SPM12*, *SPM Anatomy toolbox*, *r2agui*, *hiro3*.
 
 ## 1. Data preprocessing and preparation
 
