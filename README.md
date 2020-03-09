@@ -107,11 +107,11 @@ An ROI-wise (group) analysis cannot be conducted without first computing the (no
 ComputeOFCMask;
 ```
 
-This ComputeOFCMask.m script generates a (resliced) p-map of the OFC as the sum of the ‘OFC_Fo1.nii’, ‘OFC_Fo2.nii’, and ‘OFC_Fo3.nii’  data maps from the Anatomy toolbox of spm12. The output is stored into the ‘OFC_Total.nii’ and ‘rOFC_Total.nii’ files, which represent the unprocessed and resliced total OFC p-maps, respectively.
+This [ComputeOFCMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ComputeOFCMask.m) script generates a (resliced) p-map of the OFC as the sum of the **OFC_Fo1.nii**, **OFC_Fo2.nii**, and **OFC_Fo3.nii** data maps from the Anatomy toolbox of spm12. The output is stored into the ‘OFC_Total.nii’ and ‘rOFC_Total.nii’ files, which represent the unprocessed and resliced total OFC p-maps, respectively.
 
 ### 2.5 Periaqueductal grey (PAG)
 
-The Anatomy toolbox of spm12 does not contain a p-map of the PAG. Therefore, to use the PAG as region-of-interest, a set of coordinates derived from a recent meta-analysis by Linnman et al. (2012) are used: x = 1, y = -29, z = -12. A binary spherical ROI is built around these central coordinates via the DefineCustomROI.m script. Enter the following lines of code in the command window:
+The Anatomy toolbox of spm12 does not contain a p-map of the PAG. Therefore, to use the PAG as region-of-interest, a set of coordinates derived from a recent meta-analysis by Linnman et al. (2012) are used: x = 1, y = -29, z = -12. A binary spherical ROI is built around these central coordinates via the [DefineCustomROI.m](https://github.com/tvarkevi/RS_FMRI/blob/master/DefineCustomROI.m) script. Enter the following lines of code in the command window:
 
 ```
 input_XYZ = [1 -29 -12];
@@ -126,23 +126,25 @@ The confirmatory ROI analyses are conducted in a 3-step procedure:
 2. Subject-level general linear models are fitted with the (filtered) time-course of the (non-seed) ROI as outcome variable, the (filtered) time-course of the seed-region as predictor-of-interest, and the six motion parameters, along with the (filtered) time-courses of the white matter, CSF, and global mean signal as nuisance variables (see section 3.2). An optional additional brain region can be entered as extra nuisance variable.
 3. Independent samples t-tests are used to determine whether group differences in (mean) functional connectivity are present (see section 3.3).
 
-These steps (as well as several auxiliary procedures) are performed via the GroupLevelAnalysis.m and SubjectLevelAnalysis.m scripts.
+These steps (as well as several auxiliary procedures) are performed via the [GroupLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/GroupLevelAnalysis.m) and [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) scripts.
 
 3.1 White matter and cerebrospinal fluid (CSF) (Optional)
 
-The mean signal of the white matter and CSF are used as nuisance variables in the subject-level GLMs. The software pipeline can compute and utilize these nuisance variables automatically, without user-intervention via the ObtainWhiteMatterPredictor.m and ObtainCSFPredictor.m scripts, respectively.
+The mean signal of the white matter and CSF are used as nuisance variables in the subject-level GLMs. The software pipeline can compute and utilize these nuisance variables automatically, without user-intervention via the [ObtainWhiteMatterPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainWhiteMatterPredictor.m) and [ObtainCSFPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainCSFPredictor.m) scripts, respectively.
 
-Alternatively (but optionally), the white matter and CSF time-courses can be extracted from the data and stored as .mat files by putting lines 25 and 26 of SubjectLevelAnalysis.m in comment, than de-commenting lines 27 and 28. Next, enter the following lines of code in the command window:
+Alternatively (but optionally), the white matter and CSF time-courses can be extracted from the data and stored as .mat files by putting lines 25 and 26 of [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) in comment, than de-commenting lines 27 and 28. Next, enter the following lines of code in the command window:
 
+```
 reslice_mask = 1;
 white_matter_parameters = ObtainWhiteMatterPredictor(fileInfo, reslice_mask);
 save('white_matter_parameters.mat', 'white_matter_parameters');
 CSF_parameters = ObtainCSFPredictor(fileInfo, reslice_mask);
 save('CSF_parameters.mat', 'CSF_parameters');
+```
 
-By using this code, the white matter and CSF nuisance parameters will be stored in the white_matter_parameters.mat and CSF_parameters.mat Matlab files, respectively.
+By using this code, the white matter and CSF nuisance parameters will be stored in the **white_matter_parameters.mat** and **CSF_parameters.mat** Matlab files, respectively.
 
-Note: the mean white matter and CSF signals are computed from the corresponding segmented anatomical data files, eroded by one voxel in each axis via the ErodeNuisanceVariableMask.m script.
+Note: the mean white matter and CSF signals are computed from the corresponding segmented anatomical data files, eroded by one voxel in each axis via the [ErodeNuisanceVariableMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ErodeNuisanceVariableMask.m) script.
 
 3.2 Subject-level statistical analyses
 
