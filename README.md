@@ -111,7 +111,7 @@ This [ComputeOFCMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ComputeO
 
 ### 2.5 Periaqueductal grey (PAG)
 
-The Anatomy toolbox of spm12 does not contain a p-map of the PAG. Therefore, to use the PAG as region-of-interest, a set of coordinates derived from a recent meta-analysis by Linnman et al. (2012) are used: x = 1, y = -29, z = -12. A binary spherical ROI is built around these central coordinates via the [DefineCustomROI.m](https://github.com/tvarkevi/RS_FMRI/blob/master/DefineCustomROI.m) script. Enter the following lines of code in the command window:
+The Anatomy toolbox of spm12 does not contain a p-map of the PAG. Therefore, to use the PAG as region-of-interest, a set of coordinates derived from a recent meta-analysis by [Linnman et al. (2012)](https://www.sciencedirect.com/science/article/pii/S1053811911014005) are used: x = 1, y = -29, z = -12. A binary spherical ROI is built around these central coordinates via the [DefineCustomROI.m](https://github.com/tvarkevi/RS_FMRI/blob/master/DefineCustomROI.m) script. Enter the following lines of code in the command window:
 
 ```
 input_XYZ = [1 -29 -12];
@@ -189,12 +189,13 @@ SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo, nuis
 
 The seed-to-ROI-wise GLM analysis is conducted using the ROIWiseGLM.m script, which requires a subject number (corresponding to the line of the current subject in the subjects text file) as input argument. This function first extracts the raw time-course of the (mean) seed-region signal via the ObtainROIPredictor.m script. It then filters the signal of the seed-region predictor of interest, as well as that of the nuisance variables, by using the ezfilt.m sub-function. It also computes (and filters) the global mean signal as nuisance variable. The time-course of the non-seed ROI is then extracted using the ObtainROIPredictor.m script, and again filtered with the ezfilt.m script. These filtered signals are then used to conduct the following GLM:
 
-Non-Seed ROI = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error
+| Non-Seed ROI = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error |
 
 This GLM is computed for all (hemispheric) combinations of seed/non-seed ROIs.
 
-To execute the ROIWiseGLM.m function for a single subject by hand, enter the following code in the command window (iSubject = 32 is provided as an example):
+To execute the [ROIWiseGLM.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ROIWiseGLM.m) function for a single subject by hand, enter the following code in the command window (iSubject = 32 is provided as an example):
 
+```
 seed_region = 'rAmygdala_Total.nii';
 non_seed_region = 'rOFC_Total.nii';
 iSubject = 32;
@@ -203,21 +204,25 @@ CSF_parameters = CSF_parameters{iSubject};
 load('white_matter_parameters.mat');
 white_matter_parameters = white_matter_parameters{iSubject};
 betas_seed_vs_ROI = ROIWiseGLM(seed_region, non_seed_region, iSubject, fileInfo, CSF_parameters, white_matter_parameters);
+```
 
-Note: The ezfilt.m script is a function created by Thomas Gladwin (https://www.tegladwin.com). It high- (output argument =  fast) and low-pass (output argument = slow) filters the variable 'signal' at the specified critical value (cutFreq), using a frequency (Fs) defined as 1/TR (i.e., the repetition time of the scans). For the present purposes, the signal will be band-pass filtered at 0.01-0.08 Hz. An example of how ezfilt.m can be used for a given signal is provided below:
+> Note: The ezfilt.m script is a function created by Thomas Gladwin (https://www.tegladwin.com). It high-pass (output argument =  fast) and low-pass (output argument = slow) filters the variable 'signal' at the specified critical value (cutFreq), using a frequency (Fs) defined as 1/TR (i.e., the repetition time of the scans). For the present purposes, the signal will be band-pass filtered at 0.01-0.08 Hz. An example of how ezfilt.m can be used for a given signal is provided below:
 
+```
 TR = 1.6;
 [~, signal] = ezfilt(signal, 1/TR, 0.01);
 [signal, ~] = ezfilt(signal, 1/TR, 0.08);
+```
 
-3.2.3 Extraction of the predictors-of-interest
+#### 3.2.3 Extraction of the predictors-of-interest
 
-As mentioned above, the raw time-series of the predictor variables of interest are extracted via the ObtainROIPredictor.m script. This function reads the probability/binary atlas maps of the (seed-) regions-of-interest and extracts the BOLD signal of this ROI for each hemisphere separately. 
+As mentioned above, the raw time-series of the predictor variables of interest are extracted via the [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) script. This function reads the probability/binary atlas maps of the (seed-) regions-of-interest and extracts the BOLD signal of this ROI for each hemisphere separately. 
 
-Optional: The ObtainROIPredictor.m script provides a second option to control for the effects of partial volume sharing via the definition statement varargin (see also section 3.2.1). More specifically, by entering an optional additional nuisance region as input argument, the function is able to control for partial volume sharing by selecting only those voxels for which the rule seed_probability_map > nuisance_probability_map applies (see Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017). 
+> Optional: The [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) script provides a second option to control for the effects of partial volume sharing via the definition statement varargin (see also section 3.2.1). More specifically, by entering an optional additional nuisance region as input argument, the function is able to control for partial volume sharing by selecting only those voxels for which the rule seed_probability_map > nuisance_probability_map applies ([Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017](https://academic.oup.com/scan/article/12/12/1881/4460105)). 
 
-To execute the ObtainROIPredictor.m function for a single subject by hand, enter the following code in the command window (iSubject = 19 is provided as an example):
+To execute the [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) function for a single subject by hand, enter the following code in the command window (iSubject = 19 is provided as an example):
 
+```
 iSubject = 19;
 nScans = length(fileInfo.functional_file_names{iSubject});
 for iScan = 1:nScans
@@ -228,28 +233,33 @@ end
 region_of_interest = 'rAmygdala_LB.nii';
 nuisance_region = 'rAmygdala_CM.nii';
 [predictor_vector_right_ROI, predictor_vector_left_ROI] = ObtainROIPredictor(fileInfo, region_of_interest, all_subject_scans, nuisance_region);
+```
 
-3.3 Group-level statistical analyses
+### 3.3 Group-level statistical analyses
 
-The group-level statistical analyses are governed by a script called GroupLevelAnalysis.m. In this function, the confirmatory group ROI analyses are conducted for all left/right combinations of seed-region vs. non-seed ROI, via independent samples t-tests. The statistical output data are saved in a comma-separated file (CSV) in the format: ‘Results_confirmatory_group_analyses’. 
+The group-level statistical analyses are governed by a script called [GroupLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/GroupLevelAnalysis.m). In this function, the confirmatory group ROI analyses are conducted for all left/right combinations of seed-region vs. non-seed ROI, via independent samples t-tests. The statistical output data are saved in a comma-separated file (CSV) in the format: ‘Results_confirmatory_group_analyses’. 
 
-3.3.1 Basolateral amygdala vs. OFC
+#### 3.3.1 Basolateral amygdala vs. OFC
 
 To execute a confirmatory group ROI analysis with the basolateral amygdala as seed-region, and the OFC as non-seed ROI, enter the following lines of code in the command window:
 
+```
 seed_region = 'rAmygdala_LB.nii';
 non_seed_region = 'rOFC_Total.nii';
 analysis_type = 2;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
+```
 
-3.3.1 Centromedial amygdala vs. PAG
+#### 3.3.1 Centromedial amygdala vs. PAG
 
 To execute a confirmatory group ROI analysis with the centromedial amygdala as seed-region, and the PAG as non-seed ROI, enter the following lines of code in the command window:
 
+```
 seed_region = 'rAmygdala_CM.nii';
 non_seed_region = 'PAG.nii';
 analysis_type = 2;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
+```
 
 4. Exploratory whole-brain analysis
 
