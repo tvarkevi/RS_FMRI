@@ -22,7 +22,7 @@ function fileInfo = FileOrganizer(simulate_data)
 
 % ----- Define base directory ----- %
 fileInfo.base_dir = 'O:\MGGZ\WO\Tim\Resting State fMRI\Analysis\Version 2 (22-01-2019)';    % Location of working directory
-fileInfo.data_dir = 'G:\Resting State fMRI v.2';                                                % Location of the nifti data files
+fileInfo.data_dir = 'G:\Resting State fMRI v.2';                                            % Location of the nifti data files
 
 % ----- Define subject names and group assignments ----- %
 filename = 'subjects.txt';
