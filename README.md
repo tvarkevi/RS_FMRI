@@ -68,7 +68,7 @@ input_filename = 'Amygdala_LB.nii';
 ResliceROIMask(fileInfo, input_filename);
 ````
 
-Next, reslice the centromedial amygdala p-map by entering the following lines of code in the command window (i.e., assuming fileInfo is already defined; see above):
+Next, reslice the centromedial amygdala p-map by entering the following lines of code in the command window (i.e., assuming *fileInfo* is already defined; see above):
 
 ```
 input_filename = 'Amygdala_CM.nii';
@@ -191,7 +191,7 @@ SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo, nuis
 
 The seed-to-ROI-wise GLM analysis is conducted using the ROIWiseGLM.m script, which requires a subject number (corresponding to the line of the current subject in the subjects text file) as input argument. This function first extracts the raw time-course of the (mean) seed-region signal via the ObtainROIPredictor.m script. It then filters the signal of the seed-region predictor of interest, as well as that of the nuisance variables, by using the ezfilt.m sub-function. It also computes (and filters) the global mean signal as nuisance variable. The time-course of the non-seed ROI is then extracted using the ObtainROIPredictor.m script, and again filtered with the ezfilt.m script. These filtered signals are then used to conduct the following GLM:
 
->> Non-Seed ROI = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error
+> Non-Seed ROI = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error
 
 This GLM is computed for all (hemispheric) combinations of seed/non-seed ROIs.
 
@@ -271,85 +271,96 @@ The exploratory whole-brain analyses are conducted in a 4-step procedure:
 2. Subject-level beta-weight maps are created via voxel-wise GLM analyses that use the (filtered) time-course of each voxel as outcome variable, the (filtered) time-course of the seed-region as predictor-of-interest, and the six motion parameters, along with the (filtered) time-courses of the white matter, CSF, and global mean signal as nuisance variables (see section 4.2). An optional additional brain region can also be entered as extra nuisance variable.
 3. Group-level statistical t-maps are created both for within and between subjects (see section 4.3). 
 4. Cluster analyses are conducted to determine whether clustering of voxel-wise significance occurs in the between-groups t-map (see section 4.4)
-These steps (as well as several auxiliary procedures) are performed by the GroupLevelAnalysis.m and SubjectLevelAnalysis.m scripts.
+These steps (as well as several auxiliary procedures) are performed by the [GroupLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/GroupLevelAnalysis.m) and [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) scripts.
 
-4.1 White matter and cerebrospinal fluid (CSF) (Optional)
+### 4.1 White matter and cerebrospinal fluid (CSF) (Optional)
 
-The mean signal of the white matter and CSF are used as nuisance variables in the subject-level GLMs. The software pipeline can compute and utilize these nuisance variables automatically, without user-intervention via the ObtainWhiteMatterPredictor.m and ObtainCSFPredictor.m scripts, respectively.
+The mean signal of the white matter and CSF are used as nuisance variables in the subject-level GLMs. The software pipeline can compute and utilize these nuisance variables automatically, without user-intervention via the [ObtainWhiteMatterPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainWhiteMatterPredictor.m) and [ObtainCSFPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainCSFPredictor.m) scripts, respectively.
 
-Alternatively (but optionally), the white matter and CSF time-courses can be extracted from the data and stored as .mat files by putting lines 25 and 26 of SubjectLevelAnalysis.m in comment, than de-commenting lines 27 and 28. Next, enter the following lines of code in the command window:
+Alternatively (but optionally), the white matter and CSF time-courses can be extracted from the data and stored as .mat files by putting lines 25 and 26 of [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) in comment, than de-commenting lines 27 and 28. Next, enter the following lines of code in the command window:
 
+```
 reslice_mask = 1;
 white_matter_parameters = ObtainWhiteMatterPredictor(fileInfo, reslice_mask);
 save('white_matter_parameters.mat', 'white_matter_parameters');
 CSF_parameters = ObtainCSFPredictor(fileInfo, reslice_mask);
 save('CSF_parameters.mat', 'CSF_parameters');
+```
 
-By using this code, the white matter and CSF nuisance parameters will be stored in the white_matter_parameters.mat and CSF_parameters.mat Matlab files, respectively.
+By using this code, the white matter and CSF nuisance parameters will be stored in the **white_matter_parameters.mat** and **CSF_parameters.mat** Matlab files, respectively.
 
-Note: the mean white matter and CSF signals are computed from the corresponding segmented anatomical data files, eroded by one voxel in each axis via the ErodeNuisanceVariableMask.m script.
+Note: the mean white matter and CSF signals are computed from the corresponding segmented anatomical data files, eroded by one voxel in each axis via the [ErodeNuisanceVariableMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ErodeNuisanceVariableMask.m) script.
 
-4.2 Subject-level statistical analyses
+### 4.2 Subject-level statistical analyses
 
 The subject-level statistical analysis is conducted in a multi-step procedure:
-1. The SubjectLevelAnalysis.m script loops over all subjects and stores the GLM statistical beta maps in .nii files in the functional (subjects) data directories.
-2. The ROIWiseGLM.m script conducts the actual voxel-wise GLM analysis for the current subject.
-3. The ObtainROIPredictor.m script extracts the time-course of the seed- and nuisance ROIs.
+1. The [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) script loops over all subjects and stores the GLM statistical beta maps in .nii files in the functional (subjects) data directories.
+2. The [ROIWiseGLM.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ROIWiseGLM.m) script conducts the actual voxel-wise GLM analysis for the current subject.
+3. The [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) script extracts the time-course of the seed- and nuisance ROIs.
 
-4.2.1 Subject-level analyses
+#### 4.2.1 Subject-level analyses
 
-Similar to the confirmatory ROI analyses, the subject-level exploratory analyses are governed by the SubjectLevelAnalysis.m script. This function batches the voxel-wise GLM analyses performed by the VoxelWiseBetaMap.m script. It then stores the resulting beta-weight maps of the predictor of interest (i.e., the seed-region) as a .nii file in the subject functional scan directories. 
+Similar to the confirmatory ROI analyses, the subject-level exploratory analyses are governed by the [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) script. This function batches the voxel-wise GLM analyses performed by the [VoxelWiseBetaMap.m](https://github.com/tvarkevi/RS_FMRI/blob/master/VoxelWiseBetaMap.m) script. It then stores the resulting beta-weight maps of the predictor of interest (i.e., the seed-region) as a .nii file in the subject functional scan directories. 
 
-Optional: It is possible to enter a second brain region as nuisance variable in the voxel-ROI-wise GLM analyses by entering an optional additional input argument (i.e., via the definition statement varargin in Matlab) for the SubjectLevelAnalysis.m and ROIWiseGLM.m functions. This approach is one of two methods to control for partial volume sharing with a region-of-no-interest provided by the analysis pipeline (see section 3.2.3 for the second method; see also Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017). 
+> Optional: It is possible to enter a second brain region as nuisance variable in the voxel-ROI-wise GLM analyses by entering an optional additional input argument (i.e., via the definition statement varargin in Matlab) for the SubjectLevelAnalysis.m and ROIWiseGLM.m functions. This approach is one of two methods to control for partial volume sharing with a region-of-no-interest provided by the analysis pipeline (see section 3.2.3 for the second method; see also [Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017](https://academic.oup.com/scan/article/12/12/1881/4460105)). 
 
-Optional: As already alluded to in section 3.1, the subject-level GLM analyses are conducted with the (filtered) white matter and CSF parameters as nuisance variables. The SubjectLevelAnalysis.m script can either extract these nuisance variables automatically (if lines 26 and 27 are in comment, but lines 24 and 25 are de-commented) or load these parameters from pre-computed .mat files (if lines 26 and 27 are de-commented, but lines 24 and 25 are in comment). If the former of these options is selected, then the ObtainWhiteMatterPredictor.m and ObtainCSFPredictor.m scripts are executed automatically by the SubjectLevelAnalysis.m function (see also section 3.1).
+> Optional: As already alluded to in section 3.1, the subject-level GLM analyses are conducted with the (filtered) white matter and CSF parameters as nuisance variables. The [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) script can either extract these nuisance variables automatically (if lines 26 and 27 are in comment, but lines 24 and 25 are de-commented) or load these parameters from pre-computed .mat files (if lines 26 and 27 are de-commented, but lines 24 and 25 are in comment). If the former of these options is selected, then the [ObtainWhiteMatterPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainWhiteMatterPredictor.m) and [ObtainCSFPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainCSFPredictor.m) scripts are executed automatically by the [SubjectLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/SubjectLevelAnalysis.m) function (see also section 3.1).
 
-4.2.1.1 Basolateral amygdala
+#### 4.2.1.1 Basolateral amygdala
 
 To execute the subject-level exploratory voxel-wise GLM procedure for the basolateral amygdala as seed-region and the centromedial amygdala as nuisance variable, enter the following lines of code in the command window:
 
+```
 seed_region = 'rAmygdala_LB.nii';
 nuisance_region = 'rAmygdala_CM.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo, nuisance_region);
+```
 
-4.2.1.2 Centromedial amygdala
+#### 4.2.1.2 Centromedial amygdala
 
 To execute the subject-level exploratory voxel-wise GLM procedure for the centromedial amygdala as seed-region and the basolateral amygdala as nuisance variable, enter the following lines of code in the command window:
 
+```
 seed_region = 'rAmygdala_CM.nii';
 nuisance_region = 'rAmygdala_LB.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo, nuisance_region);
+```
 
-4.2.1.3 Anterior cingulate cortex
+#### 4.2.1.3 Anterior cingulate cortex
 
 To execute the subject-level exploratory voxel-wise GLM procedure for the anterior cingulate cortex (ACC) as seed-region, enter the following lines of code in the command window:
 
+```
 seed_region = 'rCingulum_33.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo);
+```
 
-4.2.1.4 Anterior insular cortex
+#### 4.2.1.4 Anterior insular cortex
 
 To execute the subject-level exploratory voxel-wise GLM procedure for the anterior insular cortex (AIC) as seed-region, enter the following lines of code in the command window:
 
+```
 seed_region = 'rAIC.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 SubjectLevelAnalysis(seed_region, non_seed_region, analysis_type, fileInfo);
+```
 
-4.2.2 Voxel-wise GLM analysis
+#### 4.2.2 Voxel-wise GLM analysis
 
-The voxel-wise GLM analysis is conducted using the VoxelWiseBetaMap.m script, which requires a subject number (corresponding to the line of the current subject in the subjects text file) as input argument. This function first extracts the raw time-course of the (mean) seed-region signal via the ObtainROIPredictor.m script. It then filters the signal of the seed-region predictor of interest, as well as that of the nuisance variables, by using the ezfilt.m sub-function. The time-course of each voxel is then extracted and again filtered with the ezfilt.m script. The following GLM is subsequently conducted for each voxel separately:
+The voxel-wise GLM analysis is conducted using the VoxelWiseBetaMap.m script, which requires a subject number (corresponding to the line of the current subject in the subjects text file) as input argument. This function first extracts the raw time-course of the (mean) seed-region signal via the [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) script. It then filters the signal of the seed-region predictor of interest, as well as that of the nuisance variables, by using the ezfilt.m sub-function. The time-course of each voxel is then extracted and again filtered with the ezfilt.m script. The following GLM is subsequently conducted for each voxel separately:
 
-Voxel = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error
+> Voxel = Intercept + Seed + Global Mean + Motion Parameters + White Matter + CSF + error
 
-To execute the VoxelWiseBetaMap.m function for a single subject by hand, enter the following code in the command window (iSubject = 32 is provided as an example):
+To execute the [VoxelWiseBetaMap.m](https://github.com/tvarkevi/RS_FMRI/blob/master/VoxelWiseBetaMap.m) function for a single subject by hand, enter the following code in the command window (iSubject = 32 is provided as an example):
 
+```
 seed_region = 'rAmygdala_LB.nii';
 iSubject = 32;
 load('CSF_parameters.mat');
@@ -357,21 +368,25 @@ CSF_parameters = CSF_parameters{iSubject};
 load('white_matter_parameters.mat');
 white_matter_parameters = white_matter_parameters{iSubject};
 [correlation_map_right_ROI, correlation_map_left_ROI, H_Scan] = VoxelWiseBetaMap(seed_region, iSubject, fileInfo, CSF_parameters, white_matter_parameters);
+```
 
-Note: The ezfilt.m script is a function created by Thomas Gladwin (https://www.tegladwin.com). It high- (output argument =  fast) and low-pass (output argument = slow) filters the variable signal at the specified critical value (cutFreq), using a frequency (Fs) defined as 1/TR (i.e., the repetition time of the scans). For the present purposes, the signal will be band-pass filtered at 0.01-0.08 Hz. An example of how ezfilt.m can be used for a given signal is provided below:
+> Note: The ezfilt.m script is a function created by Thomas Gladwin (https://www.tegladwin.com). It high-pass (output argument =  fast) and low-pass (output argument = slow) filters the variable 'signal' at the specified critical value (cutFreq), using a frequency (Fs) defined as 1/TR (i.e., the repetition time of the scans). For the present purposes, the signal will be band-pass filtered at 0.01-0.08 Hz. An example of how ezfilt.m can be used for a given signal is provided below:
 
+```
 TR = 1.6;
 [~, signal] = ezfilt(signal, 1/TR, 0.01);   
 [signal, ~] = ezfilt(signal, 1/TR, 0.08);
+```
 
-4.2.3 Extraction of the predictors-of-interest
+### 4.2.3 Extraction of the predictors-of-interest
 
-As mentioned section 3.2.3, the raw time-series of the predictor variables of interest are extracted via the ObtainROIPredictor.m script. This function reads the probability/binary atlas maps of the (seed-) regions-of-interest and extracts the BOLD signal of this ROI for each hemisphere separately. 
+As mentioned section 3.2.3, the raw time-series of the predictor variables of interest are extracted via the [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) script. This function reads the probability/binary atlas maps of the (seed-) regions-of-interest and extracts the BOLD signal of this ROI for each hemisphere separately. 
 
-Optional: The ObtainROIPredictor.m script provides the second option to control for the effects of partial volume sharing via the definition statement varargin (see also section 3.2.1). More specifically, by entering an optional additional nuisance region as input argument, the function is able to control for partial volume sharing by selecting only those voxels for the seed-region, for which the rule seed_probability_map > nuisance_probability_map applies (see also Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017). 
+> Optional: The [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) script provides the second option to control for the effects of partial volume sharing via the definition statement varargin (see also section 3.2.1). More specifically, by entering an optional additional nuisance region as input argument, the function is able to control for partial volume sharing by selecting only those voxels for the seed-region, for which the rule seed_probability_map > nuisance_probability_map applies (see also [Varkevisser, Gladwin, Heesink, van Honk, & Geuze, 2017](https://academic.oup.com/scan/article/12/12/1881/4460105)). 
 
-To execute the ObtainROIPredictor.m function for a single subject by hand, enter the following code in the command window (iSubject = 19 is provided as an example):
+To execute the [ObtainROIPredictor.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ObtainROIPredictor.m) function for a single subject by hand, enter the following code in the command window (iSubject = 19 is provided as an example):
 
+```
 iSubject = 19;
 nScans = length(fileInfo.functional_file_names{iSubject});
 for iScan = 1:nScans
@@ -382,70 +397,84 @@ end
 region_of_interest = 'rAmygdala_LB.nii';
 nuisance_region = 'rAmygdala_CM.nii';
 [predictor_vector_right_ROI, predictor_vector_left_ROI] = ObtainROIPredictor(fileInfo, region_of_interest, all_subject_scans, nuisance_region);
+```
 
-4.3 Group-level statistical analyses
+### 4.3 Group-level statistical analyses
 
-The group-level statistical analyses are governed by a script called GroupLevelAnalysis.m. In this function, the exploratory group ROI analyses are conducted for a given seed-region via voxel-wise independent samples t-tests performed on the subject-level beta-weight maps (see section 4.2). The statistical output is stored as a set of within and between groups t-maps (.nii files). 
+The group-level statistical analyses are governed by a script called [GroupLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/GroupLevelAnalysis.m). In this function, the exploratory group ROI analyses are conducted for a given seed-region via voxel-wise independent samples t-tests performed on the subject-level beta-weight maps (see section 4.2). The statistical output is stored as a set of within and between groups t-maps (.nii files). 
 
-4.3.1 Basolateral amygdala
+#### 4.3.1 Basolateral amygdala
 
 To execute an exploratory group analysis with the basolateral amygdala as seed-region, enter the following code in the command window:
 
+```
 seed_region = 'rAmygdala_LB.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
+```
 
-4.3.2 Centromedial amygdala
+#### 4.3.2 Centromedial amygdala
 
 To execute an exploratory group analysis with the basolateral amygdala as seed-region, enter the following code in the command window:
 
+```
 seed_region = 'rAmygdala_CM.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
+```
 
-4.3.3 Anterior cingulate cortex
+#### 4.3.3 Anterior cingulate cortex
 
 To execute an exploratory group analysis with the anterior cingulate cortex (ACC) as seed-region, enter the following code in the command window:
 
+```
 seed_region = 'rCingulum_33.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
+```
 
-4.3.4 Anterior insular cortex
+#### 4.3.4 Anterior insular cortex
 
 To execute an exploratory group analysis with the anterior cingulate cortex (ACC) as seed-region, enter the following code in the command window:
 
+```
 seed_region = 'rAIC.nii';
 non_seed_region = 'Not used';
 analysis_type = 1;
 GroupLevelAnalysis(fileInfo, seed_region, non_seed_region, analysis_type);
+```
 
-4.4 Cluster analysis
+### 4.4 Cluster analysis
 
-The GroupLevelAnalysis.m script employs a clustering algorithm in order to localize clusters of voxel-wise significant t-values (at some specified threshold of t, degrees-of-freedom, and minimum voxel extent). This clustering is performed according to the method of Lieberman & Cunningham (2009), which adopts quite liberal criteria for cluster-wise significance. The clustering of the voxel-wise t-maps is governed by a script called LiebermanCunninghamMethod.m, which either runs automatically, i.e., as part of the GroupLevelAnalysis.m function, or can be called by hand.
+The [GroupLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/GroupLevelAnalysis.m) script employs a clustering algorithm in order to localize clusters of voxel-wise significant t-values (at some specified threshold of t, degrees-of-freedom, and minimum voxel extent). This clustering is performed according to the method of [Lieberman & Cunningham (2009)](https://academic.oup.com/scan/article/4/4/423/1670802), which adopts quite liberal criteria for cluster-wise significance. The clustering of the voxel-wise t-maps is governed by a script called [LiebermanCunninghamMethod.m](https://github.com/tvarkevi/RS_FMRI/blob/master/LiebermanCunninghamMethod.m), which either runs automatically, i.e., as part of the [GroupLevelAnalysis.m](https://github.com/tvarkevi/RS_FMRI/blob/master/GroupLevelAnalysis.m) function, or can be called by hand.
 
 To execute a cluster analysis of a given voxel-wise within- or between-subjects t-map by hand, enter the following lines of code in the command window (as per example):
 
+```
 input_filename = 'Between_samples_t_map_left_rAmygdala_LB.nii';
 input_cluster_criteria.p_thres = 0.0025;
 input_cluster_criteria.df = 56;
 input_cluster_criteria.min_vox = 20;
 output_filename = LiebermanCunninghamMethod(input_filename, input_cluster_criteria);
+```
 
-5. Software testing
+## 5. Software testing
 
-The software pipeline contains a data simulation module that enables you to test and validate the analysis scripts. This data simulation module is governed by the DataSimulation.m script, which can either be run automatically via the FileOrganizer.m script (recommended), or by hand (not recommended). 
+The software pipeline contains a data simulation module that enables you to test and validate the analysis scripts. This data simulation module is governed by the [DataSimulation.m](https://github.com/tvarkevi/RS_FMRI/blob/master/DataSimulation.m) script, which can either be run automatically via the [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m) script (recommended), or by hand (not recommended). 
 
-To run the data simulation automatically via  FileOrganizer.m, enter the following lines of code in the command window:
+To run the data simulation automatically via [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m), enter the following lines of code in the command window:
 
+```
 simulate_data = 1;
 fileInfo = FileOrganizer(simulate_data);
+```
 
-To run the data simulation by hand for one particular subject via the DataSimulation.m script, use the following lines of code as an example:
+To run the data simulation by hand for one particular subject via the [DataSimulation.m](https://github.com/tvarkevi/RS_FMRI/blob/master/DataSimulation.m) script, use the following lines of code as an example:
 
+```
 fileInfo = FileOrganizer(0);
 
 iSubject = 25;
@@ -457,5 +486,6 @@ for iScan = 1:length(all_functional_scans)
 	  simulated_data_dir = [fileInfo.data_dir '\Test simulation'];
 	  this_scan_name = DataSimulation(iScan, this_scan_name, 			this_subject_group, fileInfo.base_dir, simulated_data_dir);
 end
+```
 
-To test and/or validate the software pipeline, rerun all above-described analysis steps using the newly generated simulated data file information stored in the fileInfo structural variable.
+To test and/or validate the software pipeline, rerun all above-described analysis steps using the newly generated simulated data file information stored in the *fileInfo* structural variable.
