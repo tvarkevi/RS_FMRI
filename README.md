@@ -36,7 +36,7 @@ To conduct these 3 preprocessing steps, enter the following lines of code in the
 Preprocessing(fileInfo.base_dir, fileInfo.data_dir);
 ```
 
-Note: In order to successfully run the Preprocessing.m script, it is necessary to first change line 25 of the preprocessing jobfile, Preprocessing_job.m, into the full path of the TPM.nii file located on your device (usually in the spm12/tpm subdirectory).
+Note: In order to successfully run the Preprocessing.m script, it is necessary to first change line 25 of the preprocessing jobfile, Preprocessing_job.m, into the full path of the TPM.nii file located on your device (usually in the [.../spm12/tpm] subdirectory).
 
 To segment the anatomical data into grey matter, white matter, and cerebrospinal fluid maps, enter the following line of code into the command window:
 
@@ -44,7 +44,7 @@ To segment the anatomical data into grey matter, white matter, and cerebrospinal
 Segmentation(fileInfo.base_dir, fileInfo.data_dir);
 ```
 
-Note: In order to successfully run the Segmentation.m script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, Segmentation_job.m, into the full path of the TPM.nii file located on your device (usually in the spm12/tpm subdirectory).
+Note: In order to successfully run the Segmentation.m script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, Segmentation_job.m, into the full path of the TPM.nii file located on your device (usually in the [.../pm12/tpm subdirectory]).
 
 ### 1.3 Brain mask
 
@@ -92,7 +92,7 @@ ResliceROIMask(fileInfo, input_filename);
 
 ### 2.3 Anterior insular cortex (AIC)
 
-The Anatomy toolbox of spm12 does not contain a p-map of the AIC. Hence, the AIC is defined as seed-region by using the AICHA connectivity atlas of Joliot et al. (2015). To compute a (resliced) binary map of the AIC as region-of-interest, enter the following line of code in the command window:
+The Anatomy toolbox of spm12 does not contain a p-map of the AIC. Hence, the AIC is defined as seed-region by using the AICHA connectivity atlas of [https://www.sciencedirect.com/science/article/pii/S0165027015002678][Joliot et al. (2015)]. To compute a (resliced) binary map of the AIC as region-of-interest, enter the following line of code in the command window:
 
 ```
 ComputeAICMask;
