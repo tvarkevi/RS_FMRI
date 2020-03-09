@@ -11,7 +11,7 @@ The analyses described in this document assume you have the raw (PAR/REC) MR dat
 
 Many of the functions described in this manual call a script called [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m). This function contains all hard-coded filenames and full paths that the main analysis pipeline uses. Hence, in order to make use of the resting-state seed-based connectivity software described here, it is first necessary to change lines 25 (i.e., working/base directory), 26 (i.e., data directory), 29 (i.e., the name of the text file that contains the list of subject names), 47, 51, 66, and 92 (i.e., naming conventions of original or resliced scan files) in [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m) so that they match the file infrastructure and naming conventions of your specific system.
 
-Note: The software assumes the scripts, subjects.txt, and ROI maps are stored in the same working directory, with the data stored separately (and list-wise) in another directory.
+> Note: The software assumes the scripts, subjects.txt, and ROI maps are stored in the same working directory, with the data stored separately (and list-wise) in another directory.
 
 To run the [FileOrganizer.m](https://github.com/tvarkevi/RS_FMRI/blob/master/FileOrganizer.m) script separately from the main analysis suite, enter the following lines of code in the Matlab command window:
 
@@ -37,7 +37,7 @@ To conduct these 3 preprocessing steps, enter the following lines of code in the
 Preprocessing(fileInfo.base_dir, fileInfo.data_dir);
 ```
 
-Note: In order to successfully run the [Preprocessing.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Preprocessing.m) script, it is necessary to first change line 25 of the preprocessing jobfile, [Preprocessing_job.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Preprocessing_job.m), into the full path of the TPM.nii file located on your device (usually in the *.../spm12/tpm* subdirectory).
+> Note: In order to successfully run the [Preprocessing.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Preprocessing.m) script, it is necessary to first change line 25 of the preprocessing jobfile, [Preprocessing_job.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Preprocessing_job.m), into the full path of the TPM.nii file located on your device (usually in the *.../spm12/tpm* subdirectory).
 
 To segment the anatomical data into grey matter, white matter, and cerebrospinal fluid maps, enter the following line of code into the command window:
 
@@ -45,7 +45,7 @@ To segment the anatomical data into grey matter, white matter, and cerebrospinal
 Segmentation(fileInfo.base_dir, fileInfo.data_dir);
 ```
 
-Note: In order to successfully run the [Segmentation.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation.m) script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, [Segmentation_job.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation_job.m), into the full path of the TPM.nii file located on your device (usually in the *.../spm12/tpm subdirectory*).
+> Note: In order to successfully run the [Segmentation.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation.m) script, it is first necessary to change lines 10, 24, 28, 32, 36, 40, and 44 of the segmentation jobfile, [Segmentation_job.m](https://github.com/tvarkevi/RS_FMRI/blob/master/Segmentation_job.m), into the full path of the TPM.nii file located on your device (usually in the *.../spm12/tpm* subdirectory).
 
 ### 1.3 Brain mask
 
@@ -74,13 +74,13 @@ input_filename = 'Amygdala_CM.nii';
 ResliceROIMask(fileInfo, input_filename);
 ```
 
-Note: It is also possible to create a p-map of the total amygdala as seed-region, This can be done using the [ComputeAmygdalaMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ComputeAmygdalaMask.m) file by entering the following line of code in the command window:
+> Note: It is also possible to create a p-map of the total amygdala as seed-region, This can be done using the [ComputeAmygdalaMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ComputeAmygdalaMask.m) file by entering the following line of code in the command window:
 
 ```
 ComputeAmygdalaMask;
 ```
 
-This function sums the **Amygdala_BL.nii**, **Amygdala_CM.nii**, and **Amygdala_SF.nii** p-maps into the conjoined output files 'Amygdala_Total.nii’ and ‘rAmygdala_Total.nii’, representing the unprocessed and resliced total amygdala p-maps, respectively.
+This function sums the **Amygdala_BL.nii**, **Amygdala_CM.nii**, and **Amygdala_SF.nii** p-maps (found in the *.../Anatomy/PMaps* directory) into the conjoined output files 'Amygdala_Total.nii’ and ‘rAmygdala_Total.nii’, representing the unprocessed and resliced total amygdala p-maps, respectively.
 
 ### 2.2 Anterior cingulate cortex (ACC)
 
@@ -93,7 +93,7 @@ ResliceROIMask(fileInfo, input_filename);
 
 ### 2.3 Anterior insular cortex (AIC)
 
-The Anatomy toolbox of spm12 does not contain a p-map of the AIC. Hence, the AIC is defined as seed-region by using the AICHA connectivity atlas of [https://www.sciencedirect.com/science/article/pii/S0165027015002678][Joliot et al. (2015)]. To compute a (resliced) binary map of the AIC as region-of-interest, enter the following line of code in the command window:
+The Anatomy toolbox of spm12 does not contain a p-map of the AIC. Hence, the AIC is defined as seed-region by using the AICHA connectivity atlas of [Joliot et al. (2015)](https://www.sciencedirect.com/science/article/pii/S0165027015002678). To compute a (resliced) binary map of the AIC as region-of-interest, enter the following line of code in the command window (see [ComputeAICMask.m](https://github.com/tvarkevi/RS_FMRI/blob/master/ComputeAICMask.m)):
 
 ```
 ComputeAICMask;
