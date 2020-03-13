@@ -19,11 +19,11 @@ Table of contents:
 	2. [Subject-level statistical analyses](https://github.com/tvarkevi/RS_FMRI#32-subject-level-statistical-analyses)
 	3. [Group-level statistical analyses](https://github.com/tvarkevi/RS_FMRI#33-group-level-statistical-analyses)
 4. [Exploratory whole-brain analysis](https://github.com/tvarkevi/RS_FMRI#4-exploratory-whole-brain-analysis)
-	1. [White matter and cerebrospinal fluid (CSF) (Optional)] (https://github.com/tvarkevi/RS_FMRI#41-white-matter-and-cerebrospinal-fluid-csf-optional)
+	1. [White matter and cerebrospinal fluid (CSF) (Optional)](https://github.com/tvarkevi/RS_FMRI#41-white-matter-and-cerebrospinal-fluid-csf-optional)
 	2. [Subject-level statistical analyses](https://github.com/tvarkevi/RS_FMRI#42-subject-level-statistical-analyses)
 	3. [Group-level statistical analyses](https://github.com/tvarkevi/RS_FMRI#43-group-level-statistical-analyses)
 	4. [Cluster analysis](https://github.com/tvarkevi/RS_FMRI#44-cluster-analysis)
-5. [Software testing]( https://github.com/tvarkevi/RS_FMRI#5-software-testing)
+5. [Software testing](https://github.com/tvarkevi/RS_FMRI#5-software-testing)
 
 	
 
