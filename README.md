@@ -14,6 +14,9 @@ Table of contents:
 	3. [Anterior insular cortex (AIC)](https://github.com/tvarkevi/RS_FMRI#23-anterior-insular-cortex-aic)
 	4. [Orbitofrontal cortex (OFC)](https://github.com/tvarkevi/RS_FMRI#24-orbitofrontal-cortex-ofc)
 	5. [Periaqueductal grey (PAG)](https://github.com/tvarkevi/RS_FMRI#25-periaqueductal-grey-pag)
+3. [Confirmatory ROI analysis](https://github.com/tvarkevi/RS_FMRI#3-confirmatory-roi-analysis)
+	1. [White matter and cerebrospinal fluid (CSF) (Optional)]
+
 
 
 ## 1. Data preprocessing and preparation
