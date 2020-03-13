@@ -3,6 +3,19 @@ Seed-based functional connectivity analysis of resting-state fMRI
 
 > Preliminary note: The resting-state seed-based functional connectivity procedures described in this document were developed on a Windows 7 workstation in Matlab R2016b. The following auxiliary software and toolboxes are required to be installed and added to the Matlab path in order for this analysis suite to work: [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/), [Anatomy toolbox of SPM12](https://www.fz-juelich.de/inm/inm-1/EN/Forschung/_docs/SPMAnatomyToolbox/SPMAnatomyToolbox_node.html), [r2agui](http://r2agui.sourceforge.net/), [hiro3]().
 
+Table of contents:
+1. [Data preprocessing and preparation](https://github.com/tvarkevi/RS_FMRI#1-data-preprocessing-and-preparation)
+    1. [Data management](https://github.com/tvarkevi/RS_FMRI#11-data-management)
+    2. [Preprocessing and segmentation](https://github.com/tvarkevi/RS_FMRI#12-preprocessing-and-segmentation)
+    3. [Brain mask](https://github.com/tvarkevi/RS_FMRI#13-brain-mask)
+2. [Defining the regions-of-interest](https://github.com/tvarkevi/RS_FMRI#2-defining-the-regions-of-interest)
+	1. [Amygdala (seed) regions](https://github.com/tvarkevi/RS_FMRI#21-amygdala-seed-regions)
+	2. [Anterior cingulate cortex (ACC)](https://github.com/tvarkevi/RS_FMRI#22-anterior-cingulate-cortex-acc)
+	3. [Anterior insular cortex (AIC)](https://github.com/tvarkevi/RS_FMRI#23-anterior-insular-cortex-aic)
+	4. [Orbitofrontal cortex (OFC)](https://github.com/tvarkevi/RS_FMRI#24-orbitofrontal-cortex-ofc)
+	5. [Periaqueductal grey (PAG)](https://github.com/tvarkevi/RS_FMRI#25-periaqueductal-grey-pag)
+
+
 ## 1. Data preprocessing and preparation
 
 The analyses described in this document assume you have the raw (PAR/REC) MR data files converted into NIFTI format (e.g., by using the r2agui toolbox; see http://r2agui.sourceforge.net/).
