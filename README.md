@@ -15,7 +15,8 @@ Table of contents:
 	4. [Orbitofrontal cortex (OFC)](https://github.com/tvarkevi/RS_FMRI#24-orbitofrontal-cortex-ofc)
 	5. [Periaqueductal grey (PAG)](https://github.com/tvarkevi/RS_FMRI#25-periaqueductal-grey-pag)
 3. [Confirmatory ROI analysis](https://github.com/tvarkevi/RS_FMRI#3-confirmatory-roi-analysis)
-	1. [White matter and cerebrospinal fluid (CSF) (Optional)]
+	1. [White matter and cerebrospinal fluid (CSF) (Optional)](https://github.com/tvarkevi/RS_FMRI#31-white-matter-and-cerebrospinal-fluid-csf-optional)
+	2. [Subject-level statistical analysis]
 
 
 
