@@ -5,9 +5,9 @@ Seed-based functional connectivity analysis of resting-state fMRI
 
 Table of contents:
 1. [Data preprocessing and preparation](https://github.com/tvarkevi/RS_FMRI#1-data-preprocessing-and-preparation)
-    1. [Data management](https://github.com/tvarkevi/RS_FMRI#11-data-management)
-    2. [Preprocessing and segmentation](https://github.com/tvarkevi/RS_FMRI#12-preprocessing-and-segmentation)
-    3. [Brain mask](https://github.com/tvarkevi/RS_FMRI#13-brain-mask)
+	1. [Data management](https://github.com/tvarkevi/RS_FMRI#11-data-management)
+	2. [Preprocessing and segmentation](https://github.com/tvarkevi/RS_FMRI#12-preprocessing-and-segmentation)
+	3.[Brain mask](https://github.com/tvarkevi/RS_FMRI#13-brain-mask)
 2. [Defining the regions-of-interest](https://github.com/tvarkevi/RS_FMRI#2-defining-the-regions-of-interest)
 	1. [Amygdala (seed) regions](https://github.com/tvarkevi/RS_FMRI#21-amygdala-seed-regions)
 	2. [Anterior cingulate cortex (ACC)](https://github.com/tvarkevi/RS_FMRI#22-anterior-cingulate-cortex-acc)
